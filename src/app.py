@@ -5,8 +5,8 @@ import csv
 from flask import Flask, render_template, request
 from common.database import Database
 from models.stations.station import Station
-from models.timetables.timetable import TimeTable
 from models.trains.train import Train
+from src.models.timetables.timetable import TimeTable
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -28,10 +28,25 @@ def trains_between_stations():
     return render_template("trains_btw_stations.html", trains=trains, source=source,destination=destination)
 
 
+@app.route('/trains/through', methods=['POST'])
+def trains_through():
+    source = request.form['source']
+    source = source.upper()
+    source_station = Station.get_by_id(source)
+    through = request.form['through']
+    through = through.upper()
+    through_station = Station.get_by_id(through)
+    destination = request.form['destination']
+    destination = destination.upper()
+    destination_station = Station.get_by_id(destination)
+    trains = TimeTable.connecting_trains(source, through, destination)
+    return render_template("trains_through.html", trains=trains, source=source_station, through=through_station, destination=destination_station)
+
+
 @app.route('/timetable/<string:train_no>')
 def get_timetable(train_no):
     train_class = Train.get_by_id(train_no)
-    stations = TimeTable.get_stations_by_train(train_no)
+    stations = TimeTable.get_stations_class_by_train(train_no)
     return render_template("timetable.html", stations=stations, train_class=train_class)
 
 
@@ -40,6 +55,8 @@ def home():
     stations = Station.all()
     return render_template('home.html', stations=stations)
 
+
+Database.initialize()
 
 # path = '/Volumes/SSD2/Documents/Python Workplace/Train Prediction/src/'
 # Database.initialize()
@@ -61,14 +78,6 @@ def home():
 #     train.save_to_mongo()
 #     print(t)
 
-# # For initialising MongoDB on Timetable
-# file = open(path + "timetable_data.csv", "r", encoding='utf-8')
-# reader = csv.reader(file)
-# for line in reader:
-#     t = line[0], line[1], line[2], line[3], line[4], line[5]
-#     timetable = TimeTable(str(line[0]), str(line[1]), str(line[2]), str(line[3]), str(line[4]), str(line[5]))
-#     timetable.save_to_mongo()
-#     print(t)
 
 # #For initialising MongoDB on Timetable Full
 # file = open(path + "timetable_expanded.csv", "r", encoding='utf-8')
