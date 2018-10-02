@@ -14,4 +14,26 @@
     {% endfor %}
 </div>
 
+<div class="container">
+    <div class="train" style="width:50%;float: left;">
+        <h2>{{ source.name }} to {{ through.name }} Trains</h2>
+        <br>
+        <br>
+        {% for train in trains[0] %}
+        <h3><a href = "/timetable/{{ train.train_no }}">{{ train.train_no }} - {{ train.train_name }} </a></h3>
+        <h4> Arrival Time - {{ train.arrival_time }} Destination Time - {{ train.reach_time }}</h4>
+            <hr>
+        {% endfor %}
+    </div>
+        <div class="train" style="width:50%;float: left;">
+        <h2>{{ through.name }} to {{ destination.name }} Trains</h2>
+        <br>
+        <br>
+        {% for train in trains[1] %}
+        <h3><a href = "/timetable/{{ train.train_no }}">{{ train.train_no }} - {{ train.train_name }} </a></h3>
+        <h4> Arrival Time - {{ train.arrival_time }} Destination Time - {{ train.reach_time }}</h4>
+            <hr>
+        {% endfor %}
+    </div>
+</div>s
 {% endblock %}

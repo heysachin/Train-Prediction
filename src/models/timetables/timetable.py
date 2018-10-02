@@ -104,15 +104,21 @@ class TimeTable(object):
         return datetime.datetime.strptime(dest_class["arrival_time"],"%H:%M:%S").time()
 
     @staticmethod
-    def trains_btw_stations(src, dest):
-        train_src = set(TimeTable.get_trains_by_station(src))
-        train_dest = set(TimeTable.get_trains_by_station(dest))
+    def most_trains(source, destination):
+        trains = TimeTable.trains_btw_stations(source,destination)
+        for train in trains:
+            pass
+
+    @staticmethod
+    def trains_btw_stations(source, destination):
+        train_src = set(TimeTable.get_trains_by_station(source))
+        train_dest = set(TimeTable.get_trains_by_station(destination))
         train_intersection = train_src & train_dest
         train_to_return = []
         for train in train_intersection:
-            if TimeTable.get_train_sequence(train, src) < TimeTable.get_train_sequence(train, dest):
-                source_class = TimeTable.get_train_class(train, src)
-                source_class.reach_time = TimeTable.get_time(train, dest)
+            if TimeTable.get_train_sequence(train, source) < TimeTable.get_train_sequence(train, destination):
+                source_class = TimeTable.get_train_class(train, source)
+                source_class.reach_time = TimeTable.get_time(train, destination)
                 train_to_return.append(source_class)
         train_to_return = sorted(train_to_return, key=TimeTable.arrival_time)
         return train_to_return

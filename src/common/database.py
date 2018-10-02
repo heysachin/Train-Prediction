@@ -29,3 +29,9 @@ class Database(object):
     @staticmethod
     def update(collection, query, data):
         Database.DATABASE[collection].update(query, data, upsert=True)
+
+    @staticmethod
+    def get_frequency_trains_on_station(collection, train_no):
+        # ursor = db.collection.aggregate([{"$match": options}, {"$group": {"_id": groupby, "count": {"$sum": 1}}}])
+        # return Database.DATABASE[collection].aggregate([{"$match": {train_no: train_no},{"$group":{train_no}, {"$count": "frequency"}}}])
+        pass

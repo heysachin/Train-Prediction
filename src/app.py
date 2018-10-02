@@ -93,3 +93,14 @@ Database.initialize()
 # print(TimeTable.get_trains_by_station("PGT"))
 # print(TimeTable.trains_btw_stations("PGT", "TVC"))
 # print(TimeTable.get_stations_by_train("16343"))
+
+# print(len(list(Database.get_frequency_trains_on_station("timetables","16343"))))
+
+
+
+# Created by Sachin Dev on 26/05/18
+
+
+
+
+

@@ -9,7 +9,6 @@
         {% for train in trains[0] %}
         <h3><a href = "/timetable/{{ train.train_no }}">{{ train.train_no }} - {{ train.train_name }} </a></h3>
         <h4> Arrival Time - {{ train.arrival_time }} Destination Time - {{ train.reach_time }}</h4>
-        <h4>Duration - {{ train.arrival_time - train.reach_time }}</h4>
             <hr>
         {% endfor %}
     </div>
